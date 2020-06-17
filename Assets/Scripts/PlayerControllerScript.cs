@@ -10,14 +10,34 @@ public class PlayerControllerScript : MonoBehaviour
     public Rigidbody playerRb;
 
     public float movementSpeed;
+	
+	private bool gameEnd = false;
+	private bool panning = false;
+	private Vector3 panLocation;
 
-    float cameraVerticalAngle = 0;
+    private float cameraVerticalAngle = 0;
     // float cameraHorizontalAngle = 0;
 
 
     
     
     void Update() {
+		if (panning) {
+			Vector3 targetDirection = transform.position - playerCamera.transform.position;
+			float rotationStep = 1.0f * Time.deltaTime;
+			Vector3 newDirection = Vector3.RotateTowards(playerCamera.transform.forward, targetDirection, rotationStep, 0.0f);
+			playerCamera.transform.rotation = Quaternion.LookRotation(newDirection);
+			
+			float movementStep = 1.0f * Time.deltaTime;
+			playerCamera.transform.position = Vector3.MoveTowards(playerCamera.transform.position, panLocation, movementStep);
+			if (playerCamera.transform.position == panLocation) {
+				panning = false;
+				Time.timeScale = 0;
+			}
+		}		
+		if (gameEnd) {
+			return;
+		}
         RotateCamera();
         Movement();
     }
@@ -27,8 +47,6 @@ public class PlayerControllerScript : MonoBehaviour
         targetVelocity.y = playerRb.velocity.y;
         playerRb.velocity = targetVelocity;
     }
-
-
 
     void RotateCamera() {
          
@@ -49,9 +67,18 @@ public class PlayerControllerScript : MonoBehaviour
         
 
     }
+	
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.name == "Ball(Clone)") {
             Debug.Log("YOU LOSE");
         }
     }
+	
+	public void EndGame() {
+		gameEnd = true;
+		panning = true;
+		panLocation = gameObject.transform.position;
+		panLocation -= gameObject.transform.forward * 3.0f;
+		panLocation += gameObject.transform.up * 5.0f;
+	}
 }
