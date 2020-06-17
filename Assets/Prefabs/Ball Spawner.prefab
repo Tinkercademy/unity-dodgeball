@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2271695361176123390}
   - component: {fileID: 2271695361176123391}
   - component: {fileID: 2271695361176123388}
+  - component: {fileID: -6452685594996003710}
   m_Layer: 0
   m_Name: Ball Spawner
   m_TagString: Untagged
@@ -114,3 +115,16 @@ MonoBehaviour:
   ballSpawnInterval: 1
   forceMultiplier: 10
   ballLifespan: 10
+--- !u!114 &-6452685594996003710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2271695361176123389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51bfd4a5c385e904eb47dab03ea71a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 100004, guid: b46890100828db6429ff69c322b45893, type: 3}
